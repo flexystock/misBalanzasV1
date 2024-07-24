@@ -1,7 +1,7 @@
 FROM nginx:1.19
 
-ARG UID
-EXPOSE $UID
+ARG UID=1000
+EXPOSE 80
 
 RUN adduser -u ${UID} --disabled-password --gecos "" appuser
 

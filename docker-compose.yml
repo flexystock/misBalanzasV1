@@ -1,10 +1,7 @@
 services:
   misbalanzasv1-web:
     container_name: misbalanzasv1-web
-    build:
-      context: ./docker/nginx
-      args:
-        UID: $U_ID
+    image: santiagofragio/nginx:latest
     ports:
       - 300:80
     volumes:
@@ -16,10 +13,7 @@ services:
 
   misbalanzasv1-be:
     container_name: misbalanzasv1-be
-    build:
-      context: ./docker/php
-      args:
-        UID: $U_ID
+    image: santiagofragio/php:latest
     environment:
       PHP_IDE_CONFIG: serverName=Docker
       PHP_XDEBUG_ENABLED: 1
