@@ -2,6 +2,7 @@ FROM php:8.2-fpm
 
 # Define el argumento UID con un valor predeterminado
 ARG UID=1000
+
 # Exponer el puerto 9000 (puedes ajustar según tus necesidades)
 EXPOSE 9000
 
@@ -26,6 +27,9 @@ RUN apt-get update \
     && pecl install xdebug \
     && docker-php-ext-enable --ini-name 05-opcache.ini opcache xdebug
 
+# Permitir plugins de Composer
+ENV COMPOSER_ALLOW_SUPERUSER=1
+
 # Instalar Composer
 RUN curl https://getcomposer.org/composer.phar -o /usr/bin/composer && chmod +x /usr/bin/composer
 RUN composer self-update
@@ -44,6 +48,9 @@ WORKDIR /appdata/www
 # Copiar los archivos de Composer y Symfony desde la raíz del proyecto
 COPY ./composer.json ./composer.lock ./
 RUN composer install --prefer-dist --no-dev --no-scripts --no-progress --no-suggest
+
+# Instalar symfony/runtime
+RUN composer require symfony/runtime
 
 COPY .env /appdata/www/
 
