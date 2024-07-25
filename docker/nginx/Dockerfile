@@ -5,4 +5,8 @@ EXPOSE 80
 
 RUN adduser -u ${UID} --disabled-password --gecos "" appuser
 
-COPY default.conf /etc/nginx/conf.d/
+COPY docker/nginx/default.conf.template /etc/nginx/conf.d/default.conf.template
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+
+ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["nginx", "-g", "daemon off;"]

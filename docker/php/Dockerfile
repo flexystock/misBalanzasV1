@@ -45,6 +45,13 @@ WORKDIR /appdata/www
 COPY ./composer.json ./composer.lock ./
 RUN composer install --prefer-dist --no-dev --no-scripts --no-progress --no-suggest
 
+COPY .env /appdata/www/
+
+# Ajustar permisos para los directorios var y cache
+RUN mkdir -p /appdata/www/var/cache /appdata/www/var/log && \
+    chown -R www-data:www-data /appdata/www/var && \
+    chmod -R 777 /appdata/www/var
+
 # Copiar el resto de los archivos de la aplicación
 COPY . .
 

@@ -6,6 +6,8 @@ services:
       - 300:80
     volumes:
       - ./public:/appdata/www/public
+    environment:
+      - PHP_FPM_HOST=misbalanzasv1-be
     networks:
       - misbalanzasv1-network
     depends_on:
